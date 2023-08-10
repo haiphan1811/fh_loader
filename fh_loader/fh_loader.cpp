@@ -429,11 +429,11 @@ char XMLStringTable[MAX_XML_FILES][MAX_XML_SIZE];   // --sendxml=command1.xml,co
 char XMLStringTableTemp[MAX_XML_FILES][MAX_XML_SIZE]; // --sendxml=command1.xml,command2.xml,etc
 SIZE_T NumXMLFilesInTable = 1;                      // start at 1 since <configure> will go at 0
 
-#define MAX_FILES_TO_TRACK 300
+#define MAX_FILES_TO_TRACK 2000
 char MaxFilesToTrack[MAX_FILES_TO_TRACK][MAX_PATH_SIZE];    // --search_path=command1.xml,command2.xml,etc
 SIZE_T FileToTrackCount = 0;
 
-#define MAX_XML_FILE_SIZE (128*1024)
+#define MAX_XML_FILE_SIZE (256*1024)
 char EntireXMLFileBuffer[MAX_XML_FILE_SIZE];
 
 char PortTraceName[MAX_PATH_SIZE] = "port_trace.txt";
