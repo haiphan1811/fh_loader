@@ -8558,7 +8558,11 @@ static firehose_error_t handleProgram()
 	BuildSizeTransferSoFar += FileSize; // BuildSizeTransferSoFar is manually reset before starting all of this
 
 	if (SimulateForFileSize)
+	{
+		fclose(fd); // close file stream here to avoid leaking file descriptors
+		fd = NULL;
 		return FIREHOSE_SUCCESS;  // above we know the file exists and we got the build size, now return
+	}
 
 	if (FlattenBuild)
 	{
