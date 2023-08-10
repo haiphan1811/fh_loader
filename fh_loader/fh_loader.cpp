@@ -91,7 +91,7 @@ gcc fh_loader.c -o fh_loader -lrt
 #include "platform.h"
 
 #define ZLPAWAREHOST 1
-#define SLASH '\\'    // defined differently below for LINUX
+#define SLASH DIR_SLASH
 #define WRONGSLASH '/'
 
 #define SIZE_T long long int
@@ -1703,7 +1703,7 @@ int getoptarg(int i, char * argv[], char * Option, SIZE_T SizeOfOpt, char * Argu
 
 	pch = strstr(Option, "=");
 
-	if (pch != '\0')
+	if (pch != NULL_PTR)
 	{
 		//printf("pch is NOT NULL\n\n");
 		// To be here pch is pointing at "=COM5", Option is pointing at "--port=COM5"
@@ -5427,13 +5427,13 @@ SIZE_T CopyString(char *Dest, char *Source, SIZE_T  Dstart, SIZE_T  Sstart, SIZE
 		return 1;
 	}
 
-	if (Dest == '\0')
+	if (Dest == NULL_PTR)
 	{
 		printf("CopyString Dest is NULL");  // Dest is null
 		ExitAndShowLog(1);
 	}
 
-	if (Source == '\0')
+	if (Source == NULL_PTR)
 	{
 		printf("CopyString Source is NULL");  // Source is null
 		ExitAndShowLog(1);
@@ -7008,7 +7008,7 @@ firehose_error_t GetNextPacket(void)
 
 			pch = strstr((char *)&ReadBuffer[PacketLoc], "</data>");
 
-			if (pch == '\0')
+			if (pch == NULL_PTR)
 				NeedToReadFromChannel = 1;
 			else if ((char *)pch - (char *)&ReadBuffer[PacketLoc] < 10 && strlen(pch) <= (XML_HEADER_LENGTH + 2 * XML_TAIL_LENGTH))
 				NeedToReadFromChannel = 1;
@@ -7521,7 +7521,7 @@ void PossiblyShowContentsXMLDifferentFileFoundWarning(char *CurrentPathAndFilena
 char* find_file(char *filename, char ShowToScreen)
 {
 	SIZE_T i = 0;
-	struct stat64 status_buf;
+	_stat_struct status_buf;
 	FILE *fj;
 
 	// for breakpoint only
@@ -10266,7 +10266,7 @@ void ParseContentsXML(char *FileAndPath)
 	char StorageType[] = "emmc", SaveThis = 0; // 1=eMMC, 2=UFS, 3=NAND
 	int result;
 
-	if (FileAndPath == '\0' || strlen(FileAndPath) == 0)
+	if (FileAndPath == NULL_PTR || strlen(FileAndPath) == 0)
 		return;
 
 	dbg(LOG_INFO, "Attempting to access '%s'", FileAndPath);
@@ -10967,7 +10967,7 @@ int MyCopyFile(char *FileNameSource, char *FileNameDest)
 	FILE *f2;
 	//char FileBuffer[1024*1024]; // char temp_buffer[FIREHOSE_TX_BUFFER_SIZE];
 	SIZE_T BytesRead = 0, BytesWritten = 0;
-	struct stat64 buf;
+	_stat_struct buf;
 
 	if (!ForceOverwrite)
 	{

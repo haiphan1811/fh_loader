@@ -14,6 +14,9 @@
 
 #define fseek _fseeki64
 #define ftell _ftelli64
+typedef struct stat64 _stat_struct;
+#define NULL_PTR '\0'
+#define DIR_SLASH '\\'    // defined differently below for LINUX
 #else
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -24,7 +27,10 @@
 
 #define GETCWD getcwd
 #define mkdir(x) mkdir(x, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH)
-#define _stat64(a, b) stat
+#define _stat64 stat
+typedef struct stat _stat_struct;
+#define NULL_PTR NULL
+#define DIR_SLASH '/'
 #endif
 
 #endif
